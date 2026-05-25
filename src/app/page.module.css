@@ -371,21 +371,24 @@
 .listContainer {
   display: flex;
   flex-direction: column;
-  gap: 2.25rem;
+  gap: 0;
 }
 
 .itemCard {
-  border: 1px solid var(--border);
-  background: rgba(10, 10, 10, 0.4);
-  border-radius: 8px;
-  padding: 1.5rem;
+  background: none;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 0;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.itemCard:last-child {
+  border-bottom: none;
+}
+
 .itemCard:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transform: translateX(4px);
 }
 
 .itemHeader {
@@ -465,17 +468,21 @@
 
 /* Writings Styles */
 .essayCard {
-  border: 1px solid var(--border);
-  background: rgba(10, 10, 10, 0.4);
-  border-radius: 8px;
-  padding: 1.5rem;
+  background: none;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 0;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.essayCard:last-child {
+  border-bottom: none;
+}
+
 .essayCard:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-2px);
+  transform: translateX(4px);
 }
 
 .essayHeader {
@@ -668,7 +675,7 @@
   
   .itemCard,
   .essayCard {
-    padding: 1.25rem;
+    padding: 1.25rem 0;
   }
   
   .itemTitle,
