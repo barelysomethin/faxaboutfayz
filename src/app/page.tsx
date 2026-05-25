@@ -351,7 +351,7 @@ We automated this ingestion pipeline using **Vercel Cron Jobs**. Every 12 hours,
               <h1 className={`${styles.titleName} pixel-font`}>Fayz</h1>
               {age > 0 && (
                 <span className={styles.ageCounter}>
-                  i am {age.toFixed(9)} yrs old.
+                  i am {age.toFixed(15)} yrs old.
                 </span>
               )}
             </div>
