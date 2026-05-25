@@ -48,6 +48,47 @@ const ExternalLinkIcon = () => (
   </svg>
 );
 
+const SearchIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="11" cy="11" r="8" />
+    <path d="m21 21-4.3-4.3" />
+  </svg>
+);
+
+const PLACEHOLDERS = [
+  "eg. i have a startup, how fayz can help me as a backend engineer?",
+  "eg. what is fayz's experience with RAG and LLM systems?",
+  "eg. tell me about fayz's open source contributions on neutralinojs.",
+  "eg. how can fayz optimize database cost or slow APIs?",
+];
+
+const generateMockResponse = (query: string): string => {
+  const q = query.toLowerCase();
+  
+  if (q.includes("backend") || q.includes("company") || q.includes("startup") || q.includes("help") || q.includes("hire") || q.includes("developer")) {
+    return `🤖 **AI Assistant**: Fayz can help your organization as a **Backend Engineer** by developing highly optimized, production-ready systems. He specializes in **Node.js (TypeScript/JavaScript)**, **Python**, and microservices. He has a track record of building resilient pipelines (like **VectorFlow**, which handles multi-stage chunking and upserts to Pinecone with retry/backoff queue systems) and integrating efficient performance layers (like **Semantic Caching with Redis**, cutting API latency by >95% and database cost by 40%). He is ready to bring efficiency and scale to your backend codebase.`;
+  }
+  
+  if (q.includes("rag") || q.includes("llm") || q.includes("ai") || q.includes("vector") || q.includes("pinecone")) {
+    return `🤖 **AI Assistant**: Fayz has strong experience in building **AI-native apps**. His project **VectorFlow** is an Enterprise RAG & Observability Pipeline built with **LangChain.js** and **Pinecone**. He has solved major RAG challenges including: designing recursive text-splitting chunking strategies with custom metadata extraction, building resilient ingestion queues that handle API rate-limits, and implementing high-speed **Semantic Caching** using Redis vector search to save LLM API costs.`;
+  }
+  
+  if (q.includes("project") || q.includes("jobllama") || q.includes("hist-mist") || q.includes("vectorflow")) {
+    return `🤖 **AI Assistant**: Fayz has built several notable projects: 
+1. **VectorFlow**: An Enterprise RAG Pipeline using TypeScript, LangChain.js, Pinecone, and Redis.
+2. **Jobllama**: A curated job board for new grads and interns, built with React, Node.js, and automated scraping of private APIs.
+3. **Hist-Mist**: A social discovery site for historical mystery readers, featuring real-time chatrooms via Socket.io.
+Select the **Projects** tab below to see full details and bullet points for each!`;
+  }
+  
+  if (q.includes("experience") || q.includes("work") || q.includes("job") || q.includes("freelance")) {
+    return `🤖 **AI Assistant**: Fayz's experience includes working as a **Freelance Web Developer**, where he architected and deployed full-stack marketplace applications, and contributing to significant **Open Source projects** like **Neutralinojs** (improving frontend UX) and **Dyalog APL** (enhancing web-client capabilities). Select the **Experience** tab below to explore his full background.`;
+  }
+
+  // Default response
+  return `🤖 **AI Assistant**: Thanks for asking about Fayz! Currently, this search bar is a simulated frontend component. Soon, Fayz will connect it to a full **Retrieval-Augmented Generation (RAG)** backend trained on his personal documentation. For now, you can explore the tabs below (About, Projects, Experience, and Writings) to learn more about his background in Node.js, React, AI engineering, and systems optimization!`;
+};
+
 // Types
 type TabType = "about" | "projects" | "experience" | "writings";
 
@@ -80,6 +121,87 @@ const TABS: TabType[] = ["about", "projects", "experience", "writings"];
 export default function Home() {
   const [activeTab, setActiveTab] = useState<TabType>("about");
   const [expandedEssayId, setExpandedEssayId] = useState<string | null>(null);
+
+  // AI Search Bar States
+  const [searchQuery, setSearchQuery] = useState("");
+  const [placeholderText, setPlaceholderText] = useState("");
+  const [currentPlaceholderIdx, setCurrentPlaceholderIdx] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [aiResponse, setAiResponse] = useState("");
+  const [displayedResponse, setDisplayedResponse] = useState("");
+
+  // Typewriter effect for placeholder suggestions
+  useEffect(() => {
+    let timer: NodeJS.Timeout | undefined = undefined;
+    const currentFullText = PLACEHOLDERS[currentPlaceholderIdx];
+    
+    const handleType = () => {
+      setPlaceholderText((prev) => {
+        if (!isDeleting) {
+          if (prev.length < currentFullText.length) {
+            return currentFullText.substring(0, prev.length + 1);
+          } else {
+            timer = setTimeout(() => setIsDeleting(true), 3000);
+            return prev;
+          }
+        } else {
+          if (prev.length > 0) {
+            return currentFullText.substring(0, prev.length - 1);
+          } else {
+            setIsDeleting(false);
+            setCurrentPlaceholderIdx((prevIdx) => (prevIdx + 1) % PLACEHOLDERS.length);
+            return "";
+          }
+        }
+      });
+    };
+
+    const typingSpeed = isDeleting ? 15 : 35;
+    if (!timer) {
+      timer = setTimeout(handleType, typingSpeed);
+    }
+    
+    return () => clearTimeout(timer);
+  }, [placeholderText, currentPlaceholderIdx, isDeleting]);
+
+  // Simulated AI response typewriter stream effect
+  useEffect(() => {
+    if (!aiResponse) {
+      setDisplayedResponse("");
+      return;
+    }
+    
+    setDisplayedResponse("");
+    let currentIdx = 0;
+    const interval = setInterval(() => {
+      if (currentIdx < aiResponse.length) {
+        setDisplayedResponse(aiResponse.substring(0, currentIdx + 4));
+        currentIdx += 4;
+      } else {
+        setDisplayedResponse(aiResponse);
+        clearInterval(interval);
+      }
+    }, 15);
+    
+    return () => clearInterval(interval);
+  }, [aiResponse]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery.trim() || isLoading) return;
+
+    setIsLoading(true);
+    setAiResponse("");
+    setDisplayedResponse("");
+
+    // Simulate RAG database query delay
+    setTimeout(() => {
+      const response = generateMockResponse(searchQuery);
+      setAiResponse(response);
+      setIsLoading(false);
+    }, 1200);
+  };
 
   // Keyboard navigation
   const handleTabChange = useCallback((direction: "next" | "prev") => {
@@ -217,13 +339,59 @@ We automated this ingestion pipeline using **Vercel Cron Jobs**. Every 12 hours,
           </div>
         </div>
 
-        <div className={styles.bioSection}>
-          <p className={styles.bioText}>
-            i like to build things. computer science student / software developer. making humanity dumber by reducing friction.
-          </p>
-          <p className={styles.bioText}>
-            currently writing production AI apps end to end, learning AI engineering and brand designing. contributing to open source.
-          </p>
+        <div className={styles.searchSection}>
+          <div className={styles.searchLabel}>
+            <span className={styles.aiBadgeGlow} />
+            ask ai about fayz
+          </div>
+          <form onSubmit={handleSearchSubmit} className={styles.searchContainer}>
+            <span className={styles.searchIcon}>
+              <SearchIcon />
+            </span>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={placeholderText}
+              className={styles.searchInput}
+            />
+            <span className={styles.shortcutBadge}>↵</span>
+          </form>
+
+          {(isLoading || aiResponse) && (
+            <div className={styles.aiResponseArea}>
+              <div className={styles.aiResponseHeader}>
+                <div className={styles.aiResponseTitle}>
+                  <span>✦</span> AI Response
+                </div>
+                {isLoading && <span>Querying knowledge base...</span>}
+              </div>
+              <div className={styles.aiResponseContent}>
+                {isLoading ? (
+                  <div className={styles.typingIndicator}>
+                    <div className={styles.typingDot}></div>
+                    <div className={styles.typingDot}></div>
+                    <div className={styles.typingDot}></div>
+                  </div>
+                ) : (
+                  <div>
+                    {displayedResponse.split("\n").map((line, idx) => {
+                      return (
+                        <p key={idx} style={{ marginBottom: "0.5rem" }}>
+                          {line.split(/(\*\*[^*]+\*\*)/g).map((part, partIdx) => {
+                            if (part.startsWith("**") && part.endsWith("**")) {
+                              return <strong key={partIdx}>{part.slice(2, -2)}</strong>;
+                            }
+                            return part;
+                          })}
+                        </p>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className={styles.socialList}>
