@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
 import { GeistPixelGrid } from "geist/font/pixel";
 import CursorGlow from "@/components/CursorGlow";
+import Oneko from "@/components/Oneko";
 import "./globals.css";
 
 const geistMono = Geist_Mono({
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang="en" className={`${geistMono.variable} ${GeistPixelGrid.variable}`}>
       <body>
         <CursorGlow />
+        <Oneko />
         {children}
       </body>
     </html>

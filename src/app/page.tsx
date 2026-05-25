@@ -56,7 +56,7 @@ const SearchIcon = () => (
 );
 
 const PLACEHOLDERS = [
-  "eg. i have a startup, how fayz can help me as a backend engineer?",
+  "eg. i have a [company name], how fayz can help me as a [role]?",
   "eg. what is fayz's experience with RAG and LLM systems?",
   "eg. tell me about fayz's open source contributions on neutralinojs.",
   "eg. how can fayz optimize database cost or slow APIs?",
@@ -64,15 +64,15 @@ const PLACEHOLDERS = [
 
 const generateMockResponse = (query: string): string => {
   const q = query.toLowerCase();
-  
+
   if (q.includes("backend") || q.includes("company") || q.includes("startup") || q.includes("help") || q.includes("hire") || q.includes("developer")) {
     return `🤖 **AI Assistant**: Fayz can help your organization as a **Backend Engineer** by developing highly optimized, production-ready systems. He specializes in **Node.js (TypeScript/JavaScript)**, **Python**, and microservices. He has a track record of building resilient pipelines (like **VectorFlow**, which handles multi-stage chunking and upserts to Pinecone with retry/backoff queue systems) and integrating efficient performance layers (like **Semantic Caching with Redis**, cutting API latency by >95% and database cost by 40%). He is ready to bring efficiency and scale to your backend codebase.`;
   }
-  
+
   if (q.includes("rag") || q.includes("llm") || q.includes("ai") || q.includes("vector") || q.includes("pinecone")) {
     return `🤖 **AI Assistant**: Fayz has strong experience in building **AI-native apps**. His project **VectorFlow** is an Enterprise RAG & Observability Pipeline built with **LangChain.js** and **Pinecone**. He has solved major RAG challenges including: designing recursive text-splitting chunking strategies with custom metadata extraction, building resilient ingestion queues that handle API rate-limits, and implementing high-speed **Semantic Caching** using Redis vector search to save LLM API costs.`;
   }
-  
+
   if (q.includes("project") || q.includes("jobllama") || q.includes("hist-mist") || q.includes("vectorflow")) {
     return `🤖 **AI Assistant**: Fayz has built several notable projects: 
 1. **VectorFlow**: An Enterprise RAG Pipeline using TypeScript, LangChain.js, Pinecone, and Redis.
@@ -80,7 +80,7 @@ const generateMockResponse = (query: string): string => {
 3. **Hist-Mist**: A social discovery site for historical mystery readers, featuring real-time chatrooms via Socket.io.
 Select the **Projects** tab below to see full details and bullet points for each!`;
   }
-  
+
   if (q.includes("experience") || q.includes("work") || q.includes("job") || q.includes("freelance")) {
     return `🤖 **AI Assistant**: Fayz's experience includes working as a **Freelance Web Developer**, where he architected and deployed full-stack marketplace applications, and contributing to significant **Open Source projects** like **Neutralinojs** (improving frontend UX) and **Dyalog APL** (enhancing web-client capabilities). Select the **Experience** tab below to explore his full background.`;
   }
@@ -137,7 +137,7 @@ export default function Home() {
   useEffect(() => {
     const birthTime = new Date("2005-09-15T00:00:00").getTime();
     const msPerYear = 31556926000; // 365.2422 days
-    
+
     const updateAge = () => {
       setAge((Date.now() - birthTime) / msPerYear);
     };
@@ -151,7 +151,7 @@ export default function Home() {
   useEffect(() => {
     let timer: NodeJS.Timeout | undefined = undefined;
     const currentFullText = PLACEHOLDERS[currentPlaceholderIdx];
-    
+
     const handleType = () => {
       setPlaceholderText((prev) => {
         if (!isDeleting) {
@@ -177,7 +177,7 @@ export default function Home() {
     if (!timer) {
       timer = setTimeout(handleType, typingSpeed);
     }
-    
+
     return () => clearTimeout(timer);
   }, [placeholderText, currentPlaceholderIdx, isDeleting]);
 
@@ -187,7 +187,7 @@ export default function Home() {
       setDisplayedResponse("");
       return;
     }
-    
+
     setDisplayedResponse("");
     let currentIdx = 0;
     const interval = setInterval(() => {
@@ -199,7 +199,7 @@ export default function Home() {
         clearInterval(interval);
       }
     }, 15);
-    
+
     return () => clearInterval(interval);
   }, [aiResponse]);
 
@@ -355,7 +355,7 @@ We automated this ingestion pipeline using **Vercel Cron Jobs**. Every 12 hours,
                 </span>
               )}
             </div>
-            <p className={styles.titleSubtitle}>cs student &amp; software developer</p>
+            <p className={styles.titleSubtitle}>cs student &amp; software engineer</p>
           </div>
           <div className={styles.avatar}>
             <img src="/profile.jpg" alt="Fayz" className={styles.avatarImg} />
@@ -484,11 +484,11 @@ We automated this ingestion pipeline using **Vercel Cron Jobs**. Every 12 hours,
             </div>
             <div className={styles.aboutPromptItem}>
               <span className={styles.promptSymbol}>&gt;</span>
-              <p className={styles.promptContent}>Currently using Python, TypeScript, Node.js, React, Angular, AWS, Docker, Kubernetes.</p>
+              <p className={styles.promptContent}>currently using Python, TypeScript, Node.js, React, Angular, AWS, Docker, Kubernetes.</p>
             </div>
             <div className={styles.aboutPromptItem}>
               <span className={styles.promptSymbol}>&gt;</span>
-              <p className={styles.promptContent}>Currently learning AI engineering and brand designing.</p>
+              <p className={styles.promptContent}>learning design, growth and AI engineering.</p>
             </div>
             <div className={styles.aboutPromptItem}>
               <span className={styles.promptSymbol}>&gt;</span>
@@ -572,7 +572,7 @@ We automated this ingestion pipeline using **Vercel Cron Jobs**. Every 12 hours,
                   <span>{essay.category}</span>
                 </div>
                 <p className={styles.essayExcerpt}>{essay.excerpt}</p>
-                
+
                 <div className={styles.essayExpandIndicator}>
                   {expandedEssayId === essay.id ? "Close Essay ▲" : "Read Essay ▼"}
                 </div>
@@ -586,7 +586,7 @@ We automated this ingestion pipeline using **Vercel Cron Jobs**. Every 12 hours,
                       if (para.startsWith(">")) {
                         return <blockquote key={pIdx}>{para.replace(">", "").trim()}</blockquote>;
                       }
-                      
+
                       // Highlight inline code
                       const parts = para.split(/(`[^`]+`)/g);
                       return (
