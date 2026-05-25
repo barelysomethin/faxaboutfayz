@@ -424,6 +424,7 @@
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-primary);
+  font-family: var(--font-geist-pixel-grid), monospace;
 }
 
 .itemLink {
@@ -495,6 +496,7 @@
   font-weight: 600;
   color: var(--text-primary);
   transition: color 0.2s ease;
+  font-family: var(--font-geist-pixel-grid), monospace;
 }
 
 .essayCard:hover .essayTitle {
