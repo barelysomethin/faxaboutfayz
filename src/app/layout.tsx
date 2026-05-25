@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
-import { GeistPixelGrid } from "geist/font/pixel";
+import { GeistPixelGrid, GeistPixelSquare } from "geist/font/pixel";
 import Oneko from "@/components/Oneko";
 import "./globals.css";
 
@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistMono.variable} ${GeistPixelGrid.variable}`}>
+    <html lang="en" className={`${geistMono.variable} ${GeistPixelGrid.variable} ${GeistPixelSquare.variable}`}>
       <body>
         <Oneko />
         {children}
