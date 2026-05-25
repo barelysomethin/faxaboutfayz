@@ -131,6 +131,22 @@ export default function Home() {
   const [aiResponse, setAiResponse] = useState("");
   const [displayedResponse, setDisplayedResponse] = useState("");
 
+  const [age, setAge] = useState<number>(0);
+
+  // Live Age Counter Effect
+  useEffect(() => {
+    const birthTime = new Date("2005-09-15T00:00:00").getTime();
+    const msPerYear = 31556926000; // 365.2422 days
+    
+    const updateAge = () => {
+      setAge((Date.now() - birthTime) / msPerYear);
+    };
+
+    updateAge();
+    const interval = setInterval(updateAge, 50);
+    return () => clearInterval(interval);
+  }, []);
+
   // Typewriter effect for placeholder suggestions
   useEffect(() => {
     let timer: NodeJS.Timeout | undefined = undefined;
@@ -331,7 +347,14 @@ We automated this ingestion pipeline using **Vercel Cron Jobs**. Every 12 hours,
       <header className={styles.header}>
         <div className={styles.titleContainer}>
           <div>
-            <h1 className={`${styles.titleName} pixel-font`}>Fayz</h1>
+            <div className={styles.titleWithCounter}>
+              <h1 className={`${styles.titleName} pixel-font`}>Fayz</h1>
+              {age > 0 && (
+                <span className={styles.ageCounter}>
+                  i am {age.toFixed(9)} yrs old.
+                </span>
+              )}
+            </div>
             <p className={styles.titleSubtitle}>cs student &amp; software developer</p>
           </div>
           <div className={styles.avatar}>
