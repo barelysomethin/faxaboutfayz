@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import styles from "./page.module.css";
 
 // SVG Icons
@@ -135,6 +135,7 @@ export default function Home() {
 
   // AI Search Bar States
   const [searchQuery, setSearchQuery] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
   const [placeholderText, setPlaceholderText] = useState("");
   const [currentPlaceholderIdx, setCurrentPlaceholderIdx] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -143,6 +144,15 @@ export default function Home() {
   const [displayedResponse, setDisplayedResponse] = useState("");
 
   const [age, setAge] = useState<number>(0);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Sync scroll of the input bar to the right while typing the suggestion
+  useEffect(() => {
+    if (!isFocused && !searchQuery && inputRef.current) {
+      inputRef.current.scrollLeft = inputRef.current.scrollWidth;
+    }
+  }, [placeholderText, isFocused, searchQuery]);
 
   // Live Age Counter Effect
   useEffect(() => {
@@ -384,11 +394,17 @@ We automated this ingestion pipeline using **Vercel Cron Jobs**. Every 12 hours,
               <SearchIcon />
             </span>
             <input
+              ref={inputRef}
               type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={placeholderText}
-              className={styles.searchInput}
+              value={isFocused ? searchQuery : (searchQuery || placeholderText)}
+              onChange={(e) => {
+                if (isFocused) {
+                  setSearchQuery(e.target.value);
+                }
+              }}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              className={`${styles.searchInput} ${(!isFocused && !searchQuery) ? styles.searchInputSuggestion : ""}`}
             />
             <span className={styles.shortcutBadge}>↵</span>
           </form>

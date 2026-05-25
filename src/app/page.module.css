@@ -158,6 +158,11 @@
   opacity: 0.75;
 }
 
+.searchInputSuggestion {
+  color: var(--text-muted);
+  opacity: 0.75;
+}
+
 .searchBtn {
   background: rgba(74, 222, 128, 0.08);
   border: 1px solid rgba(74, 222, 128, 0.25);
