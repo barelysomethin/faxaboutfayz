@@ -349,7 +349,7 @@ We automated this ingestion pipeline using **Vercel Cron Jobs**. Every 12 hours,
         <div className={styles.titleContainer}>
           <div>
             <div className={styles.titleWithCounter}>
-              <h1 className={`${styles.titleName} pixel-font`}>Fayz</h1>
+              <h1 className={`${styles.titleName} pixel-font`}>F a y z</h1>
               {age > 0 && (
                 <span className={styles.ageCounter}>
                   i am {age.toFixed(15)} yrs old.
@@ -618,12 +618,6 @@ We automated this ingestion pipeline using **Vercel Cron Jobs**. Every 12 hours,
 
       <footer className={styles.footer}>
         <span>&copy; {new Date().getFullYear()} Fayz</span>
-        <div>
-          Sourced from{" "}
-          <a href="https://fayzdoesthings.vercel.app/" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>
-            fayzdoesthings
-          </a>
-        </div>
       </footer>
     </div>
   );
