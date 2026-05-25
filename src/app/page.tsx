@@ -265,6 +265,60 @@ export default function Home() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleTabChange]);
 
+  // Swipe navigation for mobile
+  useEffect(() => {
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      const target = e.target as HTMLElement;
+      // Exclude interactions inside inputs, textareas, links, buttons, or the search section
+      if (target && (
+        target.closest("input") || 
+        target.closest("textarea") || 
+        target.closest("a") || 
+        target.closest("button") || 
+        target.closest(`.${styles.searchSection}`)
+      )) {
+        return;
+      }
+      touchStartX = e.changedTouches[0].clientX;
+      touchStartY = e.changedTouches[0].clientY;
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (!touchStartX || !touchStartY) return;
+      touchEndX = e.changedTouches[0].clientX;
+      touchEndY = e.changedTouches[0].clientY;
+      
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
+      
+      // Horizontal swipe must be dominant and exceed minimum distance threshold
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 60) {
+        if (diffX < 0) {
+          handleTabChange("next");
+        } else {
+          handleTabChange("prev");
+        }
+      }
+      
+      // Reset variables
+      touchStartX = 0;
+      touchStartY = 0;
+    };
+
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
+
+    return () => {
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, [handleTabChange]);
+
   // Data Sourced from fayzdoesthings.vercel.app
   const projects: Project[] = [
     {
