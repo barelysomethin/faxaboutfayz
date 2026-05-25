@@ -624,6 +624,10 @@
   .navTabs {
     margin-bottom: 2rem;
   }
+  
+  .navHint {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
@@ -653,10 +657,6 @@
   
   .tabBtn {
     font-size: 0.8rem;
-  }
-  
-  .navHint {
-    display: none;
   }
   
   .searchInput::placeholder {
