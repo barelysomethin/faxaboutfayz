@@ -146,7 +146,7 @@ export default function Home() {
 
   // Live Age Counter Effect
   useEffect(() => {
-    const birthTime = new Date("2005-09-15T00:00:00").getTime();
+    const birthTime = new Date("2004-12-20T00:00:00").getTime();
     const msPerYear = 31556926000; // 365.2422 days
 
     const updateAge = () => {
