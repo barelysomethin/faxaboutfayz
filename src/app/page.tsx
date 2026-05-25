@@ -219,6 +219,7 @@ export default function Home() {
     }, 1200);
   };
 
+
   // Keyboard navigation
   const handleTabChange = useCallback((direction: "next" | "prev") => {
     setActiveTab((prev) => {
@@ -468,19 +469,19 @@ We automated this ingestion pipeline using **Vercel Cron Jobs**. Every 12 hours,
           <div className={`${styles.tabContent} ${styles.aboutPromptList}`}>
             <div className={styles.aboutPromptItem}>
               <span className={styles.promptSymbol}>&gt;</span>
-              <p className={styles.promptContent}>Hi, I am Fayz.</p>
+              <p className={styles.promptContent}>Hi, I'm Fayz.</p>
             </div>
             <div className={styles.aboutPromptItem}>
               <span className={styles.promptSymbol}>&gt;</span>
-              <p className={styles.promptContent}>A computer science student / software developer.</p>
+              <p className={styles.promptContent}>A cs new grad and fullstack engineer.</p>
             </div>
             <div className={styles.aboutPromptItem}>
               <span className={styles.promptSymbol}>&gt;</span>
-              <p className={styles.promptContent}>Making humanity dumber by reducing friction.</p>
+              <p className={styles.promptContent}>making humanity dumber by reducing friction.</p>
             </div>
             <div className={styles.aboutPromptItem}>
               <span className={styles.promptSymbol}>&gt;</span>
-              <p className={styles.promptContent}>Writing production AI apps end to end.</p>
+              <p className={styles.promptContent}>writing production AI apps end to end.</p>
             </div>
             <div className={styles.aboutPromptItem}>
               <span className={styles.promptSymbol}>&gt;</span>
@@ -492,7 +493,7 @@ We automated this ingestion pipeline using **Vercel Cron Jobs**. Every 12 hours,
             </div>
             <div className={styles.aboutPromptItem}>
               <span className={styles.promptSymbol}>&gt;</span>
-              <p className={styles.promptContent}>Reading philosophy, history, and sci-fi in my free time.</p>
+              <p className={styles.promptContent}>reading philosophy, history, and sci-fi in my free time.</p>
             </div>
           </div>
         )}

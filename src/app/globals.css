@@ -50,11 +50,9 @@ body {
   height: 100vh;
   pointer-events: none;
   z-index: 0;
-  background: radial-gradient(
-    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(var(--accent-rgb), 0.05),
-    transparent 80%
-  );
+  background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(var(--accent-rgb), 0.05),
+      transparent 80%);
   transition: background 0.1s ease;
 }
 
@@ -75,13 +73,16 @@ body {
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--background);
 }
+
 ::-webkit-scrollbar-thumb {
   background: #1f1f23;
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #27272a;
 }
@@ -97,5 +98,3 @@ hr {
   border-top: 1px solid var(--border);
   margin: 2rem 0;
 }
-
-
