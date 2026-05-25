@@ -372,6 +372,11 @@
   color: var(--text-secondary);
 }
 
+.highlightText {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
 /* Project & Experience Styles */
 .listContainer {
   display: flex;

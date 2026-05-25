@@ -118,6 +118,17 @@ interface Essay {
 
 const TABS: TabType[] = ["about", "projects", "experience", "writings"];
 
+const SKILLS = [
+  "Python",
+  "TypeScript",
+  "Node.js",
+  "React",
+  "Angular",
+  "AWS",
+  "Docker",
+  "Kubernetes"
+];
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState<TabType>("about");
   const [expandedEssayId, setExpandedEssayId] = useState<string | null>(null);
@@ -485,7 +496,16 @@ We automated this ingestion pipeline using **Vercel Cron Jobs**. Every 12 hours,
             </div>
             <div className={styles.aboutPromptItem}>
               <span className={styles.promptSymbol}>&gt;</span>
-              <p className={styles.promptContent}>currently using Python, TypeScript, Node.js, React, Angular, AWS, Docker, Kubernetes.</p>
+              <p className={styles.promptContent}>
+                currently using{' '}
+                {SKILLS.map((skill, index) => (
+                  <span key={skill}>
+                    <span className={styles.highlightText}>{skill}</span>
+                    {index < SKILLS.length - 1 ? ", " : ""}
+                  </span>
+                ))}
+                .
+              </p>
             </div>
             <div className={styles.aboutPromptItem}>
               <span className={styles.promptSymbol}>&gt;</span>
